@@ -17,21 +17,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.arun.heartfulness.request.Employee;
-import com.arun.heartfulness.responce.ProductsResponce;
-import com.arun.heartfulness.service.MyService;
+import com.arun.heartfulness.responce.EmployeeResponce;
+import com.arun.heartfulness.service.EmployeeService;
 
 
 @RestController
 @RequestMapping("/api/employees")
 public class EmployeeController {
 	@Autowired
-	private MyService service;
+	private EmployeeService service;
 	@Autowired
-	private ProductsResponce response;
+	private EmployeeResponce response;
 
 	/* save Employee */
 	@PostMapping("/")
-	public ResponseEntity<ProductsResponce> product(@RequestBody Employee employee) {
+	public ResponseEntity<EmployeeResponce> product(@RequestBody Employee employee) {
 		
 			Employee savedEmployee=service.add(employee);
 			if(savedEmployee!=null) {
@@ -53,7 +53,7 @@ public class EmployeeController {
 
 	/* get all the employees */
 	@GetMapping("/list")
-	public ResponseEntity<ProductsResponce> getEmployees() {
+	public ResponseEntity<EmployeeResponce> getEmployees() {
 		
 		List<Employee> allEmployee=service.readAll();
 		if(allEmployee!=null) {
@@ -80,7 +80,7 @@ public class EmployeeController {
 
 	/* get specific employee by id */
 	@GetMapping("/{eid}")
-	public ResponseEntity<ProductsResponce> getEmployeeById(@PathVariable("eid") int eid) {
+	public ResponseEntity<EmployeeResponce> getEmployeeById(@PathVariable("eid") int eid) {
 		Employee employee = service.getDto(eid);
 		
 		if(employee!=null) {
@@ -99,7 +99,7 @@ public class EmployeeController {
 
 	/* update employee */
 	@PutMapping("/{eid}")
-	public ResponseEntity<ProductsResponce> updateEmployee(@PathVariable("eid") int eid,@RequestBody Employee productdto) {
+	public ResponseEntity<EmployeeResponce> updateEmployee(@PathVariable("eid") int eid,@RequestBody Employee productdto) {
 		Employee updateEmployee = service.update(eid,productdto);
 		if(updateEmployee!=null) {
 			response.setError(false);
@@ -117,7 +117,7 @@ public class EmployeeController {
 
 	/* delete employee by id */
 	@DeleteMapping("/{eid}")
-	public ResponseEntity<ProductsResponce> deleteEmployee(@PathVariable int eid) {
+	public ResponseEntity<EmployeeResponce> deleteEmployee(@PathVariable int eid) {
 		Employee deleteEmployee = service.delete(eid);
 
 		if (deleteEmployee != null) {
